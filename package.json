@@ -1,33 +1,95 @@
 {
-  "name": "create-react-app-lambda",
-  "version": "0.5.0",
-  "private": true,
-  "dependencies": {
-    "axios": "^0.19.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "^3.0.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "start:lambda": "netlify-lambda serve src/lambda",
-    "build": "run-p build:**",
-    "build:app": "react-scripts build",
-    "build:lambda": "netlify-lambda build src/lambda",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "devDependencies": {
-    "netlify-lambda": "^1.4.5",
-    "npm-run-all": "^4.1.5"
+    "name": "dapp-boilerplate",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+      "@elrondnetwork/erdjs": "8.0.1-alpha.22",
+      "@emotion/react": "^11.7.1",
+      "@emotion/styled": "^11.6.0",
+      "@fortawesome/fontawesome-svg-core": "^1.2.34",
+      "@fortawesome/free-solid-svg-icons": "^5.15.2",
+      "@fortawesome/react-fontawesome": "^0.1.12",
+      "@mui/icons-material": "^5.2.5",
+      "@mui/material": "^5.2.7",
+      "@testing-library/jest-dom": "^4.2.4",
+      "@testing-library/react": "^9.3.2",
+      "@testing-library/user-event": "^7.1.2",
+      "@types/jest": "^24.0.0",
+      "axios": "^0.21.1",
+      "bignumber.js": "^9.0.1",
+      "bootstrap": "^4.6.0",
+      "formik": "^2.2.6",
+      "immer": "^8.0.1",
+      "moment": "^2.29.1",
+      "qrcode": "^1.4.4",
+      "react": "17.0.2",
+      "react-bootstrap": "1.4.3",
+      "react-copy-to-clipboard": "5.0.4",
+      "react-dom": "17.0.2",
+      "react-dropzone": "^11.3.1",
+      "react-inlinesvg": "^2.2.2",
+      "react-modal": "3.12.1",
+      "react-number-format": "^4.9.1",
+      "react-router-dom": "5.2.0",
+      "react-scripts": "4.0.3",
+      "react-syntax-highlighter": "15.4.5",
+      "reinspect": "^1.1.0",
+      "sass": "^1.49.7",
+      "yup": "^0.32.8"
+    },
+    "scripts": {
+      "start": "react-scripts start",
+      "start:lambda": "netlify-lambda serve src/lambda",
+      "build": "run-p build:**",
+      "build:app": "react-scripts build",
+      "build:lambda": "netlify-lambda build src/lambda",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject",
+      "build-mainnet": "npm run copy-mainnet-config & npm run build",
+      "build-testnet": "npm run copy-testnet-config & npm run build",
+      "build-devnet": "npm run copy-devnet-config & npm run build",
+      "copy-mainnet-config": "run-script-os",
+      "copy-testnet-config": "run-script-os",
+      "copy-devnet-config": "run-script-os",
+      "copy-mainnet-config:nix": "cp ./src/config.mainnet.ts ./src/config.ts",
+      "copy-testnet-config:nix": "cp ./src/config.testnet.ts ./src/config.ts",
+      "copy-devnet-config:nix": "cp ./src/config.devnet.ts ./src/config.ts",
+      "copy-mainnet-config:windows": "copy .\\src\\config.mainnet.ts .\\src\\config.ts",
+      "copy-testnet-config:windows": "copy .\\src\\config.testnet.ts .\\src\\config.ts",
+      "copy-devnet-config:windows": "copy .\\src\\config.devnet.ts .\\src\\config.ts"
+    },
+    "eslintConfig": {
+      "extends": "react-app"
+    },
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    },
+    "devDependencies": {
+      "netlify-lambda": "^1.4.5",
+      "npm-run-all": "^4.1.5",
+      "@types/node": "^14.14.25",
+      "@types/qrcode": "^1.4.0",
+      "@types/react-router-dom": "^5.3.3",
+      "@typescript-eslint/eslint-plugin": "^4.14.2",
+      "@typescript-eslint/parser": "^4.14.2",
+      "eslint": "^7.19.0",
+      "eslint-config-standard": "^16.0.2",
+      "eslint-plugin-import": "^2.22.1",
+      "eslint-plugin-node": "^11.1.0",
+      "eslint-plugin-promise": "^4.2.1",
+      "eslint-plugin-react": "^7.22.0",
+      "run-script-os": "^1.1.5",
+      "typescript": "^4.1.2"
+    }
   }
-}
+  

@@ -1,0 +1,218 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.60.0-nightly",
+            "commitHash": "e646f3d2a9541952310778288854943678738ea9",
+            "commitDate": "2022-02-10",
+            "channel": "Nightly",
+            "short": "rustc 1.60.0-nightly (e646f3d2a 2022-02-10)"
+        },
+        "contractCrate": {
+            "name": "houdinex",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.27.1"
+        }
+    },
+    "name": "Houdinex",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "percent",
+                "type": "BigUint"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "token_for_sale",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "ex_rate",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "withdraw",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "mappper_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "quantity",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "buy_token",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "seller_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "mappper_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearStorage",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getMyTokens",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<PublishedTokens>"
+                }
+            ]
+        },
+        {
+            "name": "getMarketTokens",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "page",
+                    "type": "u32"
+                },
+                {
+                    "name": "page_size",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<TokenCombinedData>"
+                }
+            ]
+        },
+        {
+            "name": "getSCInfo",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "SCInfo"
+                }
+            ]
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "PublishedTokens": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "self_index",
+                    "type": "u32"
+                },
+                {
+                    "name": "in_market_index",
+                    "type": "u32"
+                },
+                {
+                    "name": "ex_token",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "ex_rate",
+                    "type": "u32"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "quantity",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        "SCInfo": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "percent",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_transactions",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "current_published_tokens",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "TokenCombinedData": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "self_index",
+                    "type": "u32"
+                },
+                {
+                    "name": "in_market_index",
+                    "type": "u32"
+                },
+                {
+                    "name": "ex_token",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "ex_rate",
+                    "type": "u32"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "quantity",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ]
+        }
+    }
+}
