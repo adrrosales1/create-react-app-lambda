@@ -1,6 +1,6 @@
 import { TransactionHash } from '@elrondnetwork/erdjs';
 import { faCheck, faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'context';
 import useInterval from 'helpers/useInterval';
 import { useEffect, useState } from 'react';

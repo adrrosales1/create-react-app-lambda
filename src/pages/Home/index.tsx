@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import { faBan, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import State from 'components/State';
 import { useContext } from 'context';
@@ -7,7 +6,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
 const Home = () => {
-  const { loading, error, loggedIn } = useContext();
+  const { loading, error } = useContext();
 
   const ref = React.useRef(null);
 
