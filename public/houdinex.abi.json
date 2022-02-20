@@ -13,7 +13,7 @@
         },
         "framework": {
             "name": "elrond-wasm",
-            "version": "0.27.1"
+            "version": "0.27.4"
         }
     },
     "name": "Houdinex",
@@ -22,6 +22,14 @@
             {
                 "name": "percent",
                 "type": "BigUint"
+            },
+            {
+                "name": "accepted_buy_tokens",
+                "type": "bytes"
+            },
+            {
+                "name": "accepted_sale_tokens",
+                "type": "bytes"
             }
         ],
         "outputs": []
@@ -123,6 +131,16 @@
                     "type": "SCInfo"
                 }
             ]
+        },
+        {
+            "name": "getSCStatistics",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "SCStatistics"
+                }
+            ]
         }
     ],
     "hasCallback": false,
@@ -165,6 +183,27 @@
             "fields": [
                 {
                     "name": "percent",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "accepted_buy_tokens",
+                    "type": "bytes"
+                },
+                {
+                    "name": "accepted_sale_tokens",
+                    "type": "bytes"
+                }
+            ]
+        },
+        "SCStatistics": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "exchanged_mex",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "exchanged_lkmex",
                     "type": "BigUint"
                 },
                 {

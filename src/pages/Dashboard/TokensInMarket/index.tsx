@@ -22,7 +22,7 @@ interface TokensInMarketType {
   balanceTokens: Array<any>;
 }
 
-interface ScInfo {
+interface ScStatistics {
   current_published_tokens: BigNumber,
   total_transactions: BigNumber,
   percent: BigNumber,
@@ -62,18 +62,18 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
   let pageSize: number = 5;
   let tokens: any = [];
 
-  async function getSCInfo(){
+  async function getSCStatistics(){
       let abiRegistry = await loadAbiRegistry(["./houdinex.abi.json"]);
       let contract = new SmartContract({ address: new Address(tokenForSaleContract), abi: new SmartContractAbi(abiRegistry, ["Houdinex"]) });
-      let interaction = contract.methods.getSCInfo();
+      let interaction = contract.methods.getSCStatistics();
       let response = interaction.interpretQueryResponse(
           await dapp.proxy.queryContract(interaction.buildQuery())
       );
-      let scInfo: any = { current_published_tokens: new BigNumber(0),total_transactions: new BigNumber(0), percent: new BigNumber(0)};
+      let scStatistics: any = { exchanged_mex: new BigNumber(0), exchanged_lkmex: new BigNumber(0), total_transactions: new BigNumber(0), current_published_tokens: new BigNumber(0)};
       await response.values[0].fields.forEach((field: any) => {
-        scInfo[field.name] = field.value.value;
+        scStatistics[field.name] = field.value.value;
       });
-      return scInfo
+      return scStatistics
   }
 
   async function getMarketTokens(page: number){
@@ -98,7 +98,7 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
   }
 
   const [myTokens, setMyTokens] = useState([]);
-  const [scInfo, setScInfo] = useState<ScInfo>();
+  const [scStatistics, setScStatistics] = useState<ScStatistics>();
   
   function changePage(event: any, pageNumber: number) {
     setLoading(true);
@@ -112,11 +112,11 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
 
 
   function getPages() {
-    if (scInfo){
-      if ((scInfo.current_published_tokens.toNumber() / pageSize) < 1) {
+    if (scStatistics){
+      if ((scStatistics.current_published_tokens.toNumber() / pageSize) < 1) {
         return 1
       } else {
-        return Math.ceil(scInfo.current_published_tokens.toNumber() / pageSize)
+        return Math.ceil(scStatistics.current_published_tokens.toNumber() / pageSize)
       }
     }
     return 1
@@ -128,8 +128,8 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
   }, []);
 
   useEffect(() => {
-    getSCInfo().then((response) => {
-      setScInfo(response)
+    getSCStatistics().then((response) => {
+      setScStatistics(response)
     });
   }, []);
 

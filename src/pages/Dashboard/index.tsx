@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useContext, useDispatch } from 'context';
-import { Address } from '@elrondnetwork/erdjs';
+import { Address, SmartContractAbi, SmartContract } from '@elrondnetwork/erdjs';
 import { AccountType } from 'helpers/contractDataDefinitions';
 import { getItem } from 'storage/session';
 import SendFundsModal from '../../components/SendFundsModal'
@@ -9,9 +9,12 @@ import {OwnerAdress} from '../../contracts';
 import MyTokens from './MyTokens'
 import TokensInMarket from './TokensInMarket';
 import WalletLogin from '../Home/Login/Wallet';
+import { loadAbiRegistry } from '@elrondnetwork/erdjs/out/testutils';
+import { buf2hex, hex2a } from 'helpers/nominate';
+import BigNumber from 'bignumber.js';
 
 const Dashboard = () => {
-  const {loggedIn, dapp, address, walletConnectAccount} = useContext();
+  const {loggedIn, dapp, address, tokenForSaleContract, walletConnectAccount} = useContext();
   const dispatch = useDispatch();
 
   const fetchAccount = () => {
@@ -34,16 +37,38 @@ const Dashboard = () => {
       });
     }
   };
+
+  const [scInfo, setSCInfo] = useState({
+    percent: new BigNumber(0), accepted_buy_tokens: "", accepted_sale_tokens: ""
+  });
+  async function getSCInfo(){
+    let abiRegistry = await loadAbiRegistry(["./houdinex.abi.json"]);
+    let contract = new SmartContract({ address: new Address(tokenForSaleContract), abi: new SmartContractAbi(abiRegistry, ["Houdinex"]) });
+    let interaction = contract.methods.getSCInfo();
+    let response = interaction.interpretQueryResponse(
+      await dapp.proxy.queryContract(interaction.buildQuery())
+    );
+    let scStatistics: any = { percent: new BigNumber(0), accepted_buy_tokens: "", accepted_sale_tokens: ""};
+    await response.values[0].fields.forEach((field: any) => {
+      scStatistics[field.name] = field.value.type.name == "bytes" ? hex2a(buf2hex(field.value.value)) : field.value.value;
+    });
+    return scStatistics;
+  }
+
+  useEffect(() => {
+    getSCInfo().then((response) => {
+      setSCInfo(response);
+    });
+  }, []);
   
   var url = window.location.pathname
   const [token, setToken] = useState(new Array());
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if(loggedIn){
+    if(loggedIn && scInfo.accepted_buy_tokens && scInfo.accepted_sale_tokens){
       setLoading(true);
       const crowdfundContract = new OwnerAdress(address, dapp.proxy);
-      // let token = (url === '/buy' ? 'MEX' : 'LockedMEX')
-      let token = (url === '/buy' ? 'DMEX' : 'TLMEX')
+      let token = (url === '/buy' ? scInfo.accepted_sale_tokens.split('-')[0] : scInfo.accepted_buy_tokens.split('-')[0])
       crowdfundContract[url === '/buy' ? 'currentFunds' : 'currentMetaFunds'](token)
       .then((value: Array<Object>) => {
           if(value.length > 0){
@@ -53,7 +78,7 @@ const Dashboard = () => {
       .catch(err => console.warn(err))
       .finally(() => setLoading(false))
     }
-  }, [loggedIn]);
+  }, [loggedIn, scInfo]);
 
   function fakeToken(){
     let ticker = (url === '/buy' ? token : 'LKMEX')
