@@ -20,20 +20,20 @@ const routes: RouteType[] = [
   {
     path: '/sell',
     page: 'dashboard',
-    title: 'Dashboard',
+    title: 'Sell LKMEX',
     component: Dashboard,
   },
   {
     path: '/buy',
     page: 'dashboard',
-    title: 'Dashboard',
+    title: 'Buy LKMEX',
     component: Dashboard,
   }
 ];
 
 const wrappedRoutes = () => {
   return routes.map(route => {
-    const title = route.title ? `${route.title} • Delegation Manager` : 'Delegation Manager';
+    const title = route.title ? `${route.title} • Houdinex` : 'Houdinex';
     return {
       path: route.path,
       page: route.page,
