@@ -68,7 +68,8 @@ const Dashboard = () => {
     if(loggedIn && scInfo.accepted_buy_tokens && scInfo.accepted_sale_tokens){
       setLoading(true);
       const crowdfundContract = new OwnerAdress(address, dapp.proxy);
-      let token = (url === '/buy' ? scInfo.accepted_sale_tokens.split('-')[0] : scInfo.accepted_buy_tokens.split('-')[0])
+      // let token = (url === '/buy' ? scInfo.accepted_sale_tokens.split('-')[0] : scInfo.accepted_buy_tokens.split('-')[0])
+      let token = (url === '/buy' ? 'MEX' : 'LockedMEX')
       crowdfundContract[url === '/buy' ? 'currentFunds' : 'currentMetaFunds'](token)
       .then((value: Array<Object>) => {
           if(value.length > 0){

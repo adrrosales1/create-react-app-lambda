@@ -54,7 +54,7 @@ export default class TokenForSale {
         return "errors"
       }
       let funcName = 'ESDTNFTTransfer'
-        + '@' + Buffer.from(TokenForSaleTT.token['ticker'], 'utf8').toString('hex') // Hexadecimal encoded TOKEN
+        + '@' + Buffer.from(TokenForSaleTT.token['collection'], 'utf8').toString('hex') // Hexadecimal encoded TOKEN
         + '@' + toHex(TokenForSaleTT.token['nonce']) // Version of the TOKEN
         + '@' + nominateValToHex(quantity) // Hexadecimal VALUE 
         + '@' + this.contract.getAddress()['valueHex'] // Hex ADDRESS

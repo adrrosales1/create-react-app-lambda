@@ -126,7 +126,7 @@ function SendFundsModal({tokens, loading, action}: SendFundsModalType) {
 
 
   function maxQuantity(){
-    let value = tokens[token].balance/Math.pow(10, 18);
+    let value = tokens[token].balance.dividedBy(Math.pow(10, 18));
     let maxValue = value.toString();
     setFormError('');
     setQuantityError('');
@@ -181,7 +181,7 @@ function SendFundsModal({tokens, loading, action}: SendFundsModalType) {
     let exponential = 'e+' + (tokens[receivedTokenId].decimals ? tokens[receivedTokenId].decimals : 18) 
     let parsedQuantity = receivedQ ? receivedQ.replace(/,/g, "") : 0;
     let value = new BigNumber( parsedQuantity + exponential)
-    let dotIndex = parsedQuantity.indexOf(".");
+    let dotIndex = parsedQuantity ? parsedQuantity.indexOf(".") : null;
     if(value.isGreaterThan(balance)){
       setQuantityError('Insufficient funds');
     } else if (!value.isGreaterThanOrEqualTo(new BigNumber(30000 + exponential)) && action === 'Sell' ) {

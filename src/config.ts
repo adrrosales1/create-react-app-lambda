@@ -12,11 +12,11 @@ export const network: NetworkType = {
     id: 'devnet',
     name: 'Devnet',
     egldLabel: 'xEGLD',
-    walletAddress: 'https://devnet-wallet.elrond.com/dapp/init',
-    apiAddress: 'https://devnet-api.elrond.com',
-    gatewayAddress: 'https://devnet-gateway.elrond.com',
-    explorerAddress: 'http://devnet-explorer.elrond.com/',
-    tokenForSaleContract: 'erd1qqqqqqqqqqqqqpgqesd7cnxggsry030cktp7tfxsd2anea0e6kss85u5wc',
+    walletAddress: 'https://testnet-wallet.elrond.com/dapp/init',
+    apiAddress: 'https://testnet-api.elrond.com',
+    gatewayAddress: 'https://testnet-gateway.elrond.com',
+    explorerAddress: 'http://testnet-explorer.elrond.com/',
+    tokenForSaleContract: 'erd1qqqqqqqqqqqqqpgqlupgglpaqm25v0l8fuheeykgh38n9c5g6kssldnc0w',
   };
 
 const networkSchema = object({

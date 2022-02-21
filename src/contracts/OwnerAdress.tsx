@@ -14,7 +14,7 @@ export default class OwnerAdress {
 
   async currentFunds(ticker:String): Promise<Array<Object>> {
     let tokenBalance: Array<Object> = []
-    await axios.get(`https://devnet-api.elrond.com/accounts/${this.address.toString()}/tokens?name=${ticker}`)
+    await axios.get(`https://testnet-api.elrond.com/accounts/${this.address.toString()}/tokens?name=${ticker}`)
     .then((response) => {
         tokenBalance = response.data
     })
@@ -23,7 +23,7 @@ export default class OwnerAdress {
 
   async currentMetaFunds(ticker:String): Promise<Array<Object>> {
     let tokenBalance: Array<Object> = []
-    await axios.get(`https://devnet-api.elrond.com/accounts/${this.address.toString()}/nfts?name=${ticker}`)
+    await axios.get(`https://testnet-api.elrond.com/accounts/${this.address.toString()}/nfts?name=${ticker}`)
     .then((response) => {
         tokenBalance = response.data
     })

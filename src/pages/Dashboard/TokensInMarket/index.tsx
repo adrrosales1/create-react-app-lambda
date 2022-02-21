@@ -53,7 +53,7 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
   async function getMarketAttributes(x:any){
     setUncodedDates({});
     let identifier = `${x.ticker}-${toHex(x.nonce.toFixed())}`
-    let response = await axios.get(`https://devnet-api.elrond.com/accounts/erd1gzfc5jgjxf5fl285qjsu49d6half9dkuhusq24dq8frn6jmm6kssuwdels/nfts/${identifier}`)
+    let response = await axios.get(`https://testnet-api.elrond.com/accounts/erd1gzfc5jgjxf5fl285qjsu49d6half9dkuhusq24dq8frn6jmm6kssuwdels/nfts/${identifier}`)
     let dates = response.data.attributes ? lkmexDates(response.data.attributes) : {};
     // let dates = response.data.attributes ? response.data.attributes : "AAAADAAAAAAAAANJAgAAAAAAAANKDwAAAAAAAANnAgAAAAAAAANoDwAAAAAAAAOFAgAAAAAAAAOGDwAAAAAAAAOjAgAAAAAAAAOkDwAAAAAAAAPBAgAAAAAAAAPCDgAAAAAAAAPfAgAAAAAAAAPgDgE=";
     setUncodedDates(dates);
