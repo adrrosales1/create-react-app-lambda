@@ -32,6 +32,7 @@ const Home = () => {
               <div className='landing'>
                 <img style={{width: '300px'}} src="/Houdinex-logo-sm.png" alt="houdinex logo" />
               </div>
+              <h4 className="mb-spacer" style={{marginTop: '-20px', color: 'rgb(247, 220, 7)'}}>TESTNET</h4>
               <h4 className="mb-spacer">P2P EXCHANGE</h4>
               <p className="lead mb-spacer">
                 Trade your LKMEX tokens in a peer-to-peer exchange

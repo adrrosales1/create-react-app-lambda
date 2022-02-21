@@ -12,6 +12,10 @@ import WalletLogin from '../Home/Login/Wallet';
 import { loadAbiRegistry } from '@elrondnetwork/erdjs/out/testutils';
 import { buf2hex, hex2a } from 'helpers/nominate';
 import BigNumber from 'bignumber.js';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const Dashboard = () => {
   const {loggedIn, dapp, address, tokenForSaleContract, walletConnectAccount} = useContext();
@@ -92,6 +96,26 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard" style={{width: '500px', textAlign: 'center'}}>
+        <Accordion style={{fontSize:'15px', padding: '5px', backgroundColor: '#3e3e39', marginBottom: '10px', color: 'rgb(247, 220, 7)'}}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <span style={{justifyContent: 'center', width: '100%'}}>You are currently in the TESTNET</span>
+          </AccordionSummary>
+          <AccordionDetails>
+          To interact with the dapp, follow the next steps:
+          <br />
+          <ol style={{textAlign: 'left', color: 'white', fontSize: '14px'}}>
+              <li>
+                Get some xEGLD in the <a style={{textDecoration: 'underline'}} href="https://testnet-wallet.elrond.com/" target="_blank" rel="noreferrer">TESTNET WALLET</a>
+              </li>
+              <li>Swap the xEGLD for MEX on the <a style={{textDecoration: 'underline'}} href="https://testnet.maiar.exchange/swap" target="_blank" rel="noreferrer">TESTNET MAIAR EXCHANGE</a></li>
+              <li>You are ready to buy some LKMEX published on the Market!!</li>
+            </ol>
+          </AccordionDetails>
+        </Accordion>
         
       {loggedIn ? (url === "/sell" ? <h5> LKMEX you can sell </h5> : <h5> MEX you can use to buy </h5>) : '' }
       {

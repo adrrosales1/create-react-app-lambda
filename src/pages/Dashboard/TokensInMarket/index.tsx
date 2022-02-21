@@ -213,7 +213,7 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
       <br />
       <Pagination style={{marginBottom: '5px'}} count={getPages()} color="secondary" onChange={changePage}/>
       {
-        (loggedIn && (currentPage < 2))
+        (loggedIn && (currentPage < 2) && (myTokens.length > 0))
         ? <div style={{fontSize:'14px', padding: '5px', backgroundColor: '#3e3e39', marginBottom: '10px', color: 'rgb(247, 220, 7)'}} >
             <small>
               These are some of the lowest priced tokens.
