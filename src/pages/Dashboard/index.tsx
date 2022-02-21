@@ -50,7 +50,7 @@ const Dashboard = () => {
     );
     let scStatistics: any = { percent: new BigNumber(0), accepted_buy_tokens: "", accepted_sale_tokens: ""};
     await response.values[0].fields.forEach((field: any) => {
-      scStatistics[field.name] = field.value.type.name == "bytes" ? hex2a(buf2hex(field.value.value)) : field.value.value;
+      scStatistics[field.name] = field.value.type.name === "bytes" ? hex2a(buf2hex(field.value.value)) : field.value.value;
     });
     return scStatistics;
   }

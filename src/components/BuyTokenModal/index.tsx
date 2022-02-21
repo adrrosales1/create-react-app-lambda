@@ -136,7 +136,7 @@ function SendFundsModal({tokens, loading, balanceTokens, loggedIn}: SendFundsMod
         setQuantityError('Insufficient funds');
     } else if (quantityToBuy.isLessThan(new BigNumber(30000 + exponential))){
       setQuantityError('Minimum purchase: ' + (exchangeRate*30000).toLocaleString() + ' MEX' );
-    } else if (dotIndex > -1 && ((parsedQuantity.length - dotIndex - 1) > 17 )){
+    } else if (dotIndex > -1 && ((parsedQuantity.length - dotIndex - 1) > 18 )){
         setQuantityError('Only 18 decimal places allowed');
     } else {
       setQuantityError('');
