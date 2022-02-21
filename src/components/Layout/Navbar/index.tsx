@@ -20,7 +20,7 @@ const Navbar = () => {
       <div className="container-fluid flex-nowrap">
         <div className="d-flex align-items-center" onClick={handleOnClick} style={{zIndex:200, cursor: 'pointer', marginRight: (matches ? '-60px' : '') }}>
           <img style={{width: (matches ? '110px' : '30px')}} src={!matches ? '/houdinex-only-logo-sm.png' : '/houdinex-vertical.png' } alt="houdinex logo" />
-          &nbsp;|&nbsp;<small> Beta </small>
+          &nbsp;|&nbsp;<small style={{color: 'rgb(247, 220, 7)'}} > Testnet </small>
         </div>
         {loggedIn && <Menu />}
         {loggedIn && (
