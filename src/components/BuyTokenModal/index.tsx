@@ -100,7 +100,7 @@ function SendFundsModal({tokens, loading, balanceTokens, loggedIn}: SendFundsMod
 
   function maxQuantity(){
     let offered_quantity = tokens[token].balance.dividedBy(Math.pow(10, 18));
-    let balance = new BigNumber(Number(tokensValue(balanceTokens))/Math.pow(10, 18));
+    let balance = (new BigNumber(Number(tokensValue(balanceTokens))).dividedBy(Math.pow(10, 18)));
     let smaller = balance.isGreaterThan(offered_quantity) ? offered_quantity : balance;
     let maxValue = smaller.toString();
 
