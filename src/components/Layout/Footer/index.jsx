@@ -1,6 +1,6 @@
 import React from 'react';
 import TwitterIcon from '@mui/icons-material/Twitter';
-// import TelegramIcon from '@mui/icons-material/Telegram';
+import TelegramIcon from '@mui/icons-material/Telegram';
 
 const Footer = () => {
   return (
@@ -9,7 +9,8 @@ const Footer = () => {
             Find us on 
             <br />
             <a href="https://twitter.com/houdine_x" rel="noreferrer" target="_blank"><TwitterIcon/></a>
-            {/* <a href="http://"><TelegramIcon/></a> */}
+            &nbsp;&nbsp;
+            <a href="https://t.me/+vN53pFhm2D4yZjcx" rel="noreferrer" target="_blank"><TelegramIcon/></a>
         </small>
     </footer>
   );

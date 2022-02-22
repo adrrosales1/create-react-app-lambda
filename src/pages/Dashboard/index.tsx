@@ -98,18 +98,20 @@ const Dashboard = () => {
     <div className="dashboard" style={{width: '500px', textAlign: 'center'}}>
         <Accordion style={{fontSize:'15px', padding: '5px', backgroundColor: '#3e3e39', marginBottom: '10px', color: 'rgb(247, 220, 7)'}}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={<ExpandMoreIcon style={{color: 'white'}} />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <span style={{justifyContent: 'center', width: '100%'}}>You are currently in the TESTNET</span>
+            <span style={{justifyContent: 'center', width: '100%', color: 'white'}}>
+                You are currently in the TESTNET
+            </span>
           </AccordionSummary>
           <AccordionDetails>
-          To interact with the dapp, follow the next steps:
-          <br />
-          <ol style={{textAlign: 'left', color: 'white', fontSize: '14px'}}>
+            To interact with the dapp, follow the next steps:
+            <br />
+            <ol style={{textAlign: 'left', color: 'white', fontSize: '14px'}}>
               <li>
-                Get some xEGLD in the <a style={{textDecoration: 'underline'}} href="https://testnet-wallet.elrond.com/" target="_blank" rel="noreferrer">TESTNET WALLET</a>
+                Get some xEGLD in the <a style={{textDecoration: 'underline'}} href="https://testnet-wallet.elrond.com/" target="_blank" rel="noreferrer">TESTNET WALLET</a> (faucet menu)
               </li>
               <li>Swap the xEGLD for MEX on the <a style={{textDecoration: 'underline'}} href="https://testnet.maiar.exchange/swap" target="_blank" rel="noreferrer">TESTNET MAIAR EXCHANGE</a></li>
               <li>You are ready to buy some LKMEX published on the Market!!</li>
