@@ -56,18 +56,28 @@ export const  base64ToHex = (str:string) => {
 }
 
 export const  lkmexDates = (str:string) => {
-    let dateCodes: any = {'34': '2022-12', '36': '2023-01', '38': '2023-02', '3A': '2023-03', '3B': '2023-03', '3C': '2023-04', '3D': '2023-05', '3E': '2023-05', '3F': '2023-06', '40': '2023-06', '41': '2023-06', '42': '2023-07'}
-    let separeted = base64ToHex(str).slice(8).slice(0, -2).match(/.{1,18}/g)
-    let response: any = {}
-    if(separeted?.length != null ){
-        for (const n of separeted) {
-            let useful = n.slice(13)
-            let date = dateCodes[useful.slice(0, -3)] ? dateCodes[useful.slice(0, -3)] : "???";
-            let percentage = parseInt(useful.slice(3), 16);
-            response[date] = (response[date] ? response[date] : 0) + percentage
-        }
-    }
-    return response
+  let offset = 0;
+  let currentEpoch = 188
+  let epochDurationHours = 2 // For tesnet 2
+  
+  const buff = Buffer.from(str, "base64");
+  const nbElems = parseInt(buff.toString("hex", offset, (offset += 4)), 16);
+  let response: any = {}
+  if(nbElems > 0 ){
+      for (let i = 0; i < nbElems; i++) {
+        let epoch = parseInt(buff.toString("hex", offset, (offset += 8)), 16);
+        epoch = epoch + 24;
+        const percent = parseInt(buff.toString("hex", offset, (offset += 8)), 16) / 1000    
+        let remainingEpochs = epoch - currentEpoch;
+        const newDate = new Date();
+        newDate.setHours(newDate.getHours() + (remainingEpochs*epochDurationHours));
+        console.log(newDate);
+        let key = newDate.toLocaleString('en', { month: 'long' }) + ' ' + newDate.getDate() + ', ' + newDate.getFullYear();
+
+        response[key] = percent
+      }
+  }
+  return response
 }
 
 export const buf2hex = (buffer: any) => { // buffer is an ArrayBuffer

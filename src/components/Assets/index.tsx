@@ -28,7 +28,7 @@ function Asset({value}: AssetType) {
     var response: any = [];
     var dates: any = [];
     value.map((x: any, index) => {
-        x.lkmexDates = lkmexDates(x.attributes ? x.attributes : '' )
+        x.lkmexDates = (x.attributes ? lkmexDates(x.attributes) : '') 
         for (const [key, value] of Object.entries(x.lkmexDates)) {
             dates.push(
                 <li key={index + ' ' + key}>
