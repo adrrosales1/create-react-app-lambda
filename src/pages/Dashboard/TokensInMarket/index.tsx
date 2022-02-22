@@ -226,8 +226,10 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
       {response}
       
       <style dangerouslySetInnerHTML={{__html:
-        ` .css-1v2lvtn-MuiPaginationItem-root { color: white; }
-          .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root { color: white; }
+        ` .css-1v2lvtn-MuiPaginationItem-root { color: white !important; }
+          .MuiPaginationItem-root { color: white !important; }
+          .MuiButtonBase-root-MuiPaginationItem-root { color: white !important; }
+          .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root { color: white !important; }
           .MuiPagination-ul{ justify-content: center; } `
       }}>
       </style>
