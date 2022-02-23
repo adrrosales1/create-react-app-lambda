@@ -63,7 +63,7 @@ export default class BuyToken {
       + '@' + BuyTokenTT.token.address.valueHex // seller address HEX
       + '@' + toHex(BuyTokenTT.token.self_index.toString()); // self index on HEX
 
-      let gasLimit = 10000000;
+      let gasLimit = 100000000;
       const func = new ContractFunction(funcName);
       let payload = TransactionPayload.contractCall()
         .setFunction(func)

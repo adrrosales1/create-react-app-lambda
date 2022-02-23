@@ -131,6 +131,7 @@ function SendFundsModal({tokens, loading, action}: SendFundsModalType) {
     setFormError('');
     setQuantityError('');
     setQuantity(maxValue);
+    checkBalanceQuantity(maxValue, token);
   }
   
   function handleTokenChange(event:any){
@@ -179,14 +180,14 @@ function SendFundsModal({tokens, loading, action}: SendFundsModalType) {
   function checkBalanceQuantity(receivedQ: any, receivedTokenId: any){
     let balance = new BigNumber(tokens[receivedTokenId].balance)
     let exponential = 'e+' + (tokens[receivedTokenId].decimals ? tokens[receivedTokenId].decimals : 18) 
-    let parsedQuantity = receivedQ ? receivedQ.replace(/,/g, "") : 0;
+    let parsedQuantity = receivedQ ? (new BigNumber(receivedQ.replace(/,/g, ""))).toFixed() : "0";
     let value = new BigNumber( parsedQuantity + exponential)
     let dotIndex = parsedQuantity ? parsedQuantity.indexOf(".") : null;
     if(value.isGreaterThan(balance)){
       setQuantityError('Insufficient funds');
     } else if (!value.isGreaterThanOrEqualTo(new BigNumber(30000 + exponential)) && action === 'Sell' ) {
       setQuantityError('Amount must be greater than 30,000');
-    } else if (dotIndex > -1 && ((parsedQuantity.length - dotIndex - 1) > 18 )){
+    } else if (dotIndex && dotIndex > -1 && ((parsedQuantity.length - dotIndex - 1) > 18 )){
       setQuantityError('Only 18 decimal places allowed');
     } else {
       setQuantityError('');
@@ -236,7 +237,7 @@ function SendFundsModal({tokens, loading, action}: SendFundsModalType) {
           </Typography>
           <Typography style={{textAlign: 'center' }}>
             <small style={{fontFamily:"Poppins"}} dangerouslySetInnerHTML={{ __html: actionData().description }}></small>
-            <HtmlTooltip title={<React.Fragment><div>If the remaining quantity after a buyer's purchase is less than 30,000 LKMEX, those tokens will be sent back to you.</div></React.Fragment>} >
+            <HtmlTooltip title={<React.Fragment><div>If the remaining quantity after a buyer's purchase is less than 30,000 and more than 1 LKMEX, those tokens will be sent back to you.</div></React.Fragment>} >
                 <InfoIcon fontSize="small" color="primary"/>
             </HtmlTooltip>
           </Typography>
@@ -263,6 +264,7 @@ function SendFundsModal({tokens, loading, action}: SendFundsModalType) {
               <NumberFormat
                 autoComplete="off"  
                 placeholder='0'
+                allowNegative={false}
                 thousandSeparator={true}
                 value={quantity}
                 customInput={TextField}
@@ -270,7 +272,6 @@ function SendFundsModal({tokens, loading, action}: SendFundsModalType) {
                 label={actionData().tokenText}
                 onChange={handleQuantityChange}
                 InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
                   endAdornment:
                   <InputAdornment position="start">
                     <IconButton style={{fontSize: '10px', marginTop: '-10px'}} onClick={maxQuantity}>max</IconButton>
@@ -283,7 +284,7 @@ function SendFundsModal({tokens, loading, action}: SendFundsModalType) {
                 ( <span>
                     <br/>
                     <span style={{textAlign: 'center'}}>
-                      <HtmlTooltip title={<React.Fragment><div>Value at which you'll like to sell your LKMEX for MEX</div></React.Fragment>} >
+                      <HtmlTooltip title={<React.Fragment><div>Exchange rate at which you'll like to sell your LKMEX for MEX. <br/> Exchange rate must be greater than 0.2 and less than 5</div></React.Fragment>} >
                           <InfoIcon fontSize="small" color="primary"/>
                       </HtmlTooltip>
                       &nbsp;Exchange rate 
@@ -292,7 +293,7 @@ function SendFundsModal({tokens, loading, action}: SendFundsModalType) {
                       <NumberFormat
                         autoComplete="off"
                         style={{width: '13rem'}}
-                        placeholder='0.95'
+                        allowNegative={false}
                         thousandSeparator={true}
                         value={exchangeRate}
                         customInput={TextField}
@@ -322,16 +323,7 @@ function SendFundsModal({tokens, loading, action}: SendFundsModalType) {
 
               <br/>
               <Button variant="contained" onClick={sendFunds} >
-                <HtmlTooltip
-                  title={
-                    <React.Fragment>
-                      <div> No fees at the moment</div>
-                    </React.Fragment>
-                  }
-                >
-                    <InfoIcon fontSize="small" />
-                </HtmlTooltip>
-                &nbsp;{actionData().ctaText}
+                {actionData().ctaText}
               </Button>
               <small style={{color: 'red', textAlign: 'center', maxWidth: '40'}} dangerouslySetInnerHTML={{ __html: formError }}></small>
             </FormControl>

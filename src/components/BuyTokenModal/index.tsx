@@ -79,9 +79,9 @@ function SendFundsModal({tokens, loading, balanceTokens, loggedIn}: SendFundsMod
       return {
         buttonText: "Buy tokens",
         ctaText: "Buy",
-        description: "Buy LKMEX Tokens with your MEX tokens",
+        description: "(Offer can be partially fullfilled)",
         titleText: "Buy LKMEX",
-        tokenText: "Amount to buy",
+        tokenText: "LKMEX to buy",
       }
   }
 
@@ -100,13 +100,14 @@ function SendFundsModal({tokens, loading, balanceTokens, loggedIn}: SendFundsMod
 
   function maxQuantity(){
     let offered_quantity = tokens[token].balance.dividedBy(Math.pow(10, 18));
-    let balance = (new BigNumber(Number(tokensValue(balanceTokens))).dividedBy(Math.pow(10, 18)));
+    let balance = new BigNumber(Number(tokensValue(balanceTokens))).dividedBy(Math.pow(10, 18));
     let smaller = balance.isGreaterThan(offered_quantity) ? offered_quantity : balance;
     let maxValue = smaller.toString();
 
     setFormError('');
     setQuantityError('');
     setQuantity(maxValue);
+    checkBalanceQuantity(maxValue, token)
   }
   
   function handleQuantityChange(event:any){
@@ -124,19 +125,19 @@ function SendFundsModal({tokens, loading, balanceTokens, loggedIn}: SendFundsMod
   function checkBalanceQuantity(receivedQ: any, receivedTokenId: any){
     let balance = new BigNumber(tokens[receivedTokenId].balance)
     let exponential = 'e+' + (tokens[receivedTokenId].decimals ? tokens[receivedTokenId].decimals : 18) 
-    let parsedQuantity = receivedQ ? receivedQ.replace(/,/g, "") : 0;
+    let parsedQuantity = receivedQ ? (new BigNumber(receivedQ.replace(/,/g, ""))).toFixed() : "0";
     let value = new BigNumber( parsedQuantity + exponential)
 
     let exchangeRate = tokens[receivedTokenId].ex_rate.dividedBy(100);
     let quantityToBuy = value.dividedBy(exchangeRate);
-    let dotIndex = parsedQuantity.indexOf(".");
+    let dotIndex = parsedQuantity ? parsedQuantity.indexOf(".") : null;
     if(value.isGreaterThan(balance)){
       setQuantityError('Amount must be equal or less than what is offered');
     } else if (value.isGreaterThan(new BigNumber(tokensValue(balanceTokens)))){
         setQuantityError('Insufficient funds');
-    } else if (quantityToBuy.isLessThan(new BigNumber(30000 + exponential))){
-      setQuantityError('Minimum purchase: ' + (exchangeRate*30000).toLocaleString() + ' MEX' );
-    } else if (dotIndex > -1 && ((parsedQuantity.length - dotIndex - 1) > 18 )){
+    } else if (value.isLessThan(new BigNumber(30000 + exponential))){
+      setQuantityError('Minimum purchase: ' + (30000).toLocaleString() + ' LKMEX' );
+    } else if (dotIndex && dotIndex > -1 && ((parsedQuantity.length - dotIndex - 1) > 18 )){
         setQuantityError('Only 18 decimal places allowed');
     } else {
       setQuantityError('');
@@ -206,7 +207,8 @@ function SendFundsModal({tokens, loading, balanceTokens, loggedIn}: SendFundsMod
                 Balance: <Denominate decimals={4} value={tokensValue(balanceTokens)} ticker=""/>
               </small>
               <NumberFormat
-                autoComplete="off"  
+                autoComplete="off"
+                allowNegative={false}
                 placeholder='0'
                 thousandSeparator={true}
                 value={quantity}
@@ -215,7 +217,6 @@ function SendFundsModal({tokens, loading, balanceTokens, loggedIn}: SendFundsMod
                 label={actionData().tokenText}
                 onChange={handleQuantityChange}
                 InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
                   endAdornment:
                   <InputAdornment position="start">
                     <IconButton style={{fontSize: '10px', marginTop: '-10px'}} onClick={maxQuantity}>max</IconButton>
@@ -225,28 +226,19 @@ function SendFundsModal({tokens, loading, balanceTokens, loggedIn}: SendFundsMod
               <small style={{color: 'red'}}>{quantityError}</small>
               {
                 (quantity)
-                  ? <small style={{textAlign: 'center'}}> You will pay ≈&nbsp;
+                  ? <div style={{textAlign: 'center'}}> <br /> You will pay ≈&nbsp;
                       <strong>
                         { quantity ? parseFloat(tokens[0].ex_rate.dividedBy(100).multipliedBy(quantity.replace(/,/g, '')).toFixed()).toLocaleString() : 0 } MEX
                       </strong>
-                      <br />
-                    </small>
+                    </div>
                   : ''
               }
               <br/>
               <Button variant="contained" onClick={sendFunds} >
-                <HtmlTooltip
-                  title={
-                    <React.Fragment>
-                      <div> No fees at the moment</div>
-                    </React.Fragment>
-                  }
-                >
-                    <InfoIcon fontSize="small" />
-                </HtmlTooltip>
-                &nbsp;{actionData().ctaText}
+                {actionData().ctaText}
               </Button>
               <small style={{color: 'red', textAlign: 'center', maxWidth: '40'}} dangerouslySetInnerHTML={{ __html: formError }}></small>
+              <small style={{color: 'rgb(99,99,99)', marginTop: '4px', textAlign:'center', fontSize:'12px'}} >0.00% fees at the moment</small>
             </FormControl>
 
             <div style={{fontSize:'14px', padding: '5px', marginBottom: '10px', color: 'rgb(99,99,99)', backgroundColor: 'rgb(229,229,229)', textAlign: 'center'}} >

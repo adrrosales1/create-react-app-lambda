@@ -71,7 +71,6 @@ export const  lkmexDates = (str:string) => {
         let remainingEpochs = epoch - currentEpoch;
         const newDate = new Date();
         newDate.setHours(newDate.getHours() + (remainingEpochs*epochDurationHours));
-        console.log(newDate);
         let key = newDate.toLocaleString('en', { month: 'long' }) + ' ' + newDate.getDate() + ', ' + newDate.getFullYear();
 
         response[key] = percent

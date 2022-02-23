@@ -140,23 +140,19 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
       for (const [key, value] of Object.entries(uncodedDates)) {
           dates.push(
               <li key={index + ' ' + key}>
-                  {value}% - Unlocks on {key}
+                  {value}% - {key}
               </li>
           )
       }
       response.push(
         <div className="card border-0 d-flex flex-row justify-content-between" key={index}>
           <span>
-            <ListItemButton>
+            <div style={{display: 'flex', margin: '15px 8px 5px 15px'}} >
               <ListItemIcon>
               <img className="token-symbol" src="https://media.elrond.com/tokens/asset/LKMEX-aab910/logo.svg" alt="" />
               </ListItemIcon>
-              <ListItemText>
+              <ListItemText style={{textAlign: 'left'}}>
                   <Denominate decimals={4} value={x.balance} ticker={x.ticker} />
-                  <br />
-                  <small style={{marginTop: '-20px'}}>
-                    1 MEX ≈ {(x.ex_rate/100).toString()} LKMEX
-                  </small>
                   &nbsp;
                   <HtmlTooltip onOpen={ (e) => {handleTooltipOpen(e, x)} } title={
                       <React.Fragment><div>UNLOCK DATES</div>
@@ -168,8 +164,14 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
                   >
                     <InfoIcon fontSize="small" color="primary"/>
                 </HtmlTooltip>
+                  <br />
+                  <small style={{marginTop: '-20px'}}>
+                    Exchange rate: 1 MEX ≈ {(x.ex_rate/100).toString()} LKMEX
+                    <br />
+                    <strong> MEX ≈ <Denominate decimals={4} value={x.balance.multipliedBy(x.ex_rate/100)} ticker="" /></strong>
+                  </small>
               </ListItemText>
-            </ListItemButton>
+            </div>
           </span>
           <BuyTokenModal tokens={[x]} loggedIn={loggedIn} loading={loading} balanceTokens={balanceTokens}/>
         </div>
@@ -213,12 +215,16 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
       <br />
       <Pagination style={{marginBottom: '5px'}} count={getPages()} color="secondary" onChange={changePage}/>
       {
-        (loggedIn && (currentPage < 2) && (myTokens.length > 0))
+        (loggedIn)
         ? <div style={{fontSize:'14px', padding: '5px', backgroundColor: '#3e3e39', marginBottom: '10px', color: 'rgb(247, 220, 7)'}} >
-            <small>
-              These are some of the lowest priced tokens.
-              <br />
-              Other buyers may be trying to purchase them at the same time.
+            <small style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+              Tokens are sorted by lowest exchange rate first.
+              {
+                (currentPage < 2) && (myTokens.length > 0)
+                ?
+                  <div style={{maxWidth: '80%'}}> These are some of the lowest priced tokens. Other buyers may be trying to purchase them at the same time.</div>
+                : ""
+              }
             </small>
           </div>
         : ''
