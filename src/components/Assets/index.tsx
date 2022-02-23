@@ -13,7 +13,7 @@ interface AssetType {
 }
 
 const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
-    <Tooltip {...props} classes={{ popper: className }} />
+    <Tooltip {...props} enterTouchDelay={0} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
       backgroundColor: '#f5f5f9',
