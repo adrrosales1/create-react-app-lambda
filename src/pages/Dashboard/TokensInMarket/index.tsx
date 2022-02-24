@@ -166,9 +166,9 @@ function MyTokens({balanceTokens, loadingBalance}: TokensInMarketType) {
                 </HtmlTooltip>
                   <br />
                   <small style={{marginTop: '-20px'}}>
-                    Exchange rate: 1 MEX ≈ {(x.ex_rate/100).toString()} LKMEX
+                    <strong> 1 MEX ≈ {(x.ex_rate/100).toString()} LKMEX </strong>
                     <br />
-                    <strong> MEX ≈ <Denominate decimals={4} value={x.balance.multipliedBy(x.ex_rate/100)} ticker="" /></strong>
+                    <span> MEX value ≈ <Denominate decimals={2} value={x.balance.multipliedBy(x.ex_rate/100)} ticker="" /></span>
                   </small>
               </ListItemText>
             </div>
