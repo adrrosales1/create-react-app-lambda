@@ -37,7 +37,7 @@ function Asset({value}: AssetType) {
             )
         }
         response.push(
-            <ListItemButton style={{minWidth: "450px"}} key={index} sx={{ pl: 4 }}>
+            <ListItemButton key={index} sx={{ pl: 4 }}>
                 <ListItemIcon>
                     <img className="token-symbol" src="https://media.elrond.com/tokens/asset/LKMEX-aab910/logo.svg" alt="" />
                 </ListItemIcon>

@@ -95,7 +95,7 @@ const Dashboard = () => {
   useEffect(dispatchLoginType, /* eslint-disable react-hooks/exhaustive-deps */ []);
 
   return (
-    <div className="dashboard" style={{width: '100%', textAlign: 'center'}}>
+    <div className="dashboard" style={{width: '100%', maxWidth: '600px', textAlign: 'center'}}>
         <Accordion style={{fontSize:'15px', padding: '5px', backgroundColor: '#3e3e39', marginBottom: '10px', color: 'rgb(247, 220, 7)'}}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon style={{color: 'white'}} />}
