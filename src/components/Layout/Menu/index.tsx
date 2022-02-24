@@ -16,8 +16,8 @@ const Menu = () => {
 
   return (
     <ButtonGroup style={{justifyContent: "center", width: '100%', boxShadow: 'none'}} variant="contained" aria-label="outlined primary button group">
-        <Button size="small" onClick={() => redirect('buy')} style={url === '/buy' ? active : inactive} >Buy LKMEX</Button>
-        <Button size="small" onClick={() => redirect('sell')} style={url === '/sell' ? active : inactive} >Sell LKMEX</Button>
+        <Button size="small" onClick={() => redirect('buy')} style={url === '/buy' ? active : inactive} >Buy</Button>
+        <Button size="small" onClick={() => redirect('sell')} style={url === '/sell' ? active : inactive} >Sell</Button>
     </ButtonGroup>
   );
 };
